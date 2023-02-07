@@ -29,8 +29,6 @@ pipelines:
             - name: {{ .Values.artifactory }}
         execution:
           onStart:
-            - echo "Preparing for work..."
-          onExecute:
             - "npm set progress=false"
             - "npm install date-fns --save"
           onSuccess:
