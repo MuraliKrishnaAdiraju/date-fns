@@ -31,8 +31,8 @@ pipelines:
           onStart:
             - echo "Preparing for work..."
           onExecute:
-            - npm set progress=false
-            - npm install date-fns --save
+            - "npm set progress=false"
+            - "npm install date-fns --save"
           onSuccess:
             - echo "Job well done!"
           onFailure:
