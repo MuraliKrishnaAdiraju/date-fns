@@ -28,14 +28,24 @@ pipelines:
           integrations:
             - name: {{ .Values.artifactory }}
         execution:
+          onStart:
+            - echo "Preparing for work..."
           onExecute:
             - npm set progress=false
             - npm install date-fns --save
+          onSuccess:
+            - echo "Job well done!"
+          onFailure:
+            - echo "uh oh, something went wrong"
+          onComplete:                                  
+            - echo "Cleaning up some stuff"
 
       - name: publish_build
         type: NpmPublish
         configuration:
           deployerRepo: {{ .Values.deployerSSRepo }}
+          integrations:
+            - name: {{ .Values.artifactory }}
           inputSteps:
             - name: npm_build_step
           outputResources:
