@@ -1,0 +1,5 @@
+gitProvider: VA_GHE
+artifactory: VA_DEV_ARTI
+repoPath: MuraliKrishnaAdiraju/date-fns
+deployerSSRepo: sbo-cicd-npm-dev-local
+deployerRelRepo: sbo-cicd-npm-release-local

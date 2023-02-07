@@ -1,0 +1,42 @@
+template: true   # required for local templates
+valuesFilePath: ./values.yml
+
+resources:
+  - name: npm_repo
+    type: GitRepo
+    configuration:
+      path: {{ .Values.repoPath }}
+      gitProvider: {{ .Values.gitProvider }}
+
+  - name: npm_build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: {{ .Values.artifactory }}
+      buildName: $res_npm_build_info_buildName
+      buildNumber: $res_npm_build_info_buildNumber
+
+
+pipelines:
+  - name: demo_npm
+    steps:
+      - name: npm_build_step
+        type: NpmBuild
+        configuration:
+          sourceLocation: .
+          inputResources:
+            - name: npm_repo
+          integrations:
+            - name: {{ .Values.artifactory }}
+        execution:
+          onExecute:
+            - npm set progress=false
+            - npm install date-fns --save
+
+      - name: publish_build
+        type: NpmPublish
+        configuration:
+          deployerRepo: {{ .Values.deployerSSRepo }}
+          inputSteps:
+            - name: npm_build_step
+          outputResources:
+            - name: npm_build_info
