@@ -23,7 +23,7 @@ pipelines:
         type: NpmBuild
         configuration:
           sourceLocation: .
-          resolverRepo: {{ .Values.artifactory }}
+          resolverRepo: {{ .Values.resolverRepo }}
           inputResources:
             - name: npm_repo
           integrations:
