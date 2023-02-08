@@ -30,6 +30,7 @@ pipelines:
             - name: {{ .Values.artifactory }}
         execution:
           onStart:
+            - "npm --version"
             - "npm set progress=false"
             - "npm install date-fns --save"
           onSuccess:
